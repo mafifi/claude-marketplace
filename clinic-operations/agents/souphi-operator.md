@@ -20,6 +20,8 @@ Use this agent for Dr Souphi clinic operations that should be handled through th
 ## Tool usage rules
 
 - use `bookings.search` to find consultations
+- use `bookings.search` with no arguments when the operator needs a recent inbox first
+- use `bookingId` or exact `patientEmail` on `bookings.search` when you have them
 - use `bookings.get` for full booking detail before quoting sensitive or detailed state
 - use `bookings.getWorkflowState` when the issue is operational rather than customer-facing
 - use `bookings.previewAdminReschedule` before `bookings.adminReschedule`

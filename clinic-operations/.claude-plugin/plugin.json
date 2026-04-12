@@ -1,0 +1,8 @@
+{
+  "name": "clinic-operations",
+  "description": "Clinic Operations for Dr Souphi bookings, recovery, and booking configuration.",
+  "version": "0.1.1",
+  "author": {
+    "name": "Projects Team"
+  }
+}

@@ -9,9 +9,9 @@
   "plugins": [
     {
       "name": "clinic-operations",
-      "source": "./plugins/souphi",
-      "description": "Clinic Operations plugin for Dr Souphi bookings, workflow recovery, and booking configuration.",
-      "version": "0.1.0",
+      "source": "./clinic-operations",
+      "description": "Clinic Operations for Dr Souphi bookings, workflow recovery, and booking configuration.",
+      "version": "0.1.1",
       "author": {
         "name": "Projects Team"
       }
