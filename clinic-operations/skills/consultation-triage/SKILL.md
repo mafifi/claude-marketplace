@@ -11,12 +11,13 @@ Use the Souphi MCP tools as the source of truth for consultation lookup and tria
 
 1. Start with `bookings.search`.
 2. If you have a strong identifier, include it:
-   - `bookingId`
-   - exact `patientEmail`
+   - `bookingId` only if the user explicitly gave it or a prior tool returned it
+   - exact `patientEmail` (or plain `email`, which is accepted as an alias) only if the user explicitly gave the patient email
    - otherwise supported status/date filters
 3. If you do not yet have a strong identifier, call `bookings.search` with no arguments first to load the recent operator inbox, then refine from there.
-4. If a single booking is identified, load `bookings.get`.
-5. If the problem sounds operational, also load `bookings.getWorkflowState`.
+4. Never infer patient identifiers from the authenticated operator identity.
+5. If a single booking is identified, load `bookings.get`.
+6. If the problem sounds operational, also load `bookings.getWorkflowState`.
 
 ## Triage rules
 

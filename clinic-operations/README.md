@@ -89,7 +89,9 @@ The bundled skills and agent are written to prefer these tools directly rather t
 Important usage expectations:
 
 - `bookings.search` with no arguments returns a recent operator inbox
-- `bookings.search` becomes more precise with `bookingId`, exact `patientEmail`, or explicit operational filters
+- `bookings.search` should be called with no arguments unless the user explicitly provided a filter or a prior tool returned one
+- `bookings.search` becomes more precise with `bookingId`, exact `patientEmail` (plain `email` is also accepted), or explicit operational filters
+- `patientEmail`, `email`, and `bookingId` must not be inferred from the authenticated operator identity
 - admin cancel and reschedule stay preview-first
 - `bookingConfig.update` is whole-object read-before-write
 

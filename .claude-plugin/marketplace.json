@@ -11,7 +11,7 @@
       "name": "clinic-operations",
       "source": "./clinic-operations",
       "description": "Clinic Operations for Dr Souphi bookings, workflow recovery, and booking configuration.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": {
         "name": "Projects Team"
       }
