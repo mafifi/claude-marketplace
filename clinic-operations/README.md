@@ -4,6 +4,8 @@
 
 ## Phase 1 scope
 
+- patient search, creation, outstanding-item review, access requests, and invoice sends
+- internal treatment setup, Stripe state sync, consent linkage, and aftercare linkage
 - consultation search and detail
 - workflow state and recovery
 - admin cancellation and reschedule
@@ -81,6 +83,24 @@ The plugin expects the Souphi MCP runtime to expose these tools:
 - `bookings.recoverModification`
 - `bookings.recoverCancellation`
 - `bookings.createProvisionalCheckout`
+- `patients.search`
+- `patients.get`
+- `patients.create`
+- `patients.getOutstandingItems`
+- `patients.previewSendAccessRequest`
+- `patients.sendAccessRequest`
+- `patients.previewSendInvoice`
+- `patients.sendInvoice`
+- `treatments.search`
+- `treatments.get`
+- `treatments.previewInternalSetup`
+- `treatments.createInternal`
+- `treatments.syncStripeState`
+- `treatments.linkConsentTemplate`
+- `treatments.linkAftercareTemplate`
+- `treatments.createConsentTemplateDraft`
+- `treatments.createAftercareTemplateDraft`
+- `treatments.getSetupStatus`
 - `bookingConfig.get`
 - `bookingConfig.update`
 
@@ -93,7 +113,10 @@ Important usage expectations:
 - `bookings.search` becomes more precise with `bookingId`, exact `patientEmail` (plain `email` is also accepted), or explicit operational filters
 - `patientEmail`, `email`, and `bookingId` must not be inferred from the authenticated operator identity
 - admin cancel and reschedule stay preview-first
-- `bookingConfig.update` is whole-object read-before-write
+- patient-facing access and invoice sends stay preview-first and require confirmed patient email plus `operatorReason`
+- `patients.search` and `treatments.search` do not allow no-argument browsing
+- treatment slugs are checked before create, and template link updates preserve full rich-text content
+- `bookingConfig.update` is whole-object read-before-write with `previousConfiguration`
 
 ## Staff install path
 

@@ -1,6 +1,10 @@
 ---
 name: booking-desk
 description: Create provisional operator-assisted consultation checkouts for Dr Souphi using the Souphi MCP booking desk tool. Use when clinic staff are helping a patient book by phone or email but payment still needs to happen through checkout.
+mcp_tools:
+  - bookings.createProvisionalCheckout
+  - bookings.getMonthAvailability
+  - bookings.getDayAvailability
 ---
 
 # Booking Desk

@@ -1,6 +1,10 @@
 ---
 name: consultation-triage
 description: Search and triage Dr Souphi consultations using the Souphi MCP booking tools. Use when an operator needs to find a booking, inspect current state, or narrow operational status before taking action.
+mcp_tools:
+  - bookings.search
+  - bookings.get
+  - bookings.getWorkflowState
 ---
 
 # Consultation Triage

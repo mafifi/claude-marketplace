@@ -1,6 +1,14 @@
 ---
 name: admin-booking-changes
 description: Handle admin cancellation and reschedule for Dr Souphi consultations using the Souphi MCP preview and execute tools. Use when clinic staff need to override self-service constraints while keeping workflow invariants intact.
+mcp_tools:
+  - bookings.get
+  - bookings.getMonthAvailability
+  - bookings.getDayAvailability
+  - bookings.previewAdminReschedule
+  - bookings.adminReschedule
+  - bookings.previewAdminCancel
+  - bookings.adminCancel
 ---
 
 # Admin Booking Changes

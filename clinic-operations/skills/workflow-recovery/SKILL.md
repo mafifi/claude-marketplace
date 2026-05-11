@@ -1,6 +1,12 @@
 ---
 name: workflow-recovery
 description: Recover stuck Dr Souphi booking workflows through the Souphi MCP recovery tools. Use when a booking appears operationally stuck, waiting on an external event, or has failed after partial progress.
+mcp_tools:
+  - bookings.get
+  - bookings.getWorkflowState
+  - bookings.recoverConfirmation
+  - bookings.recoverModification
+  - bookings.recoverCancellation
 ---
 
 # Workflow Recovery
