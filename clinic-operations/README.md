@@ -10,7 +10,7 @@
 - workflow state and recovery
 - admin cancellation and reschedule
 - provisional booking checkout creation
-- booking configuration read and whole-object update
+- clinic settings read, preview, and update
 
 Current runtime boundary:
 
@@ -42,8 +42,16 @@ Then run:
 The plugin ships with a static remote MCP registration in `.mcp.json`:
 
 - `https://mcp.drsouphi.com/mcp`
+- OAuth uses the static public client id `claude-code`; no local callback port is pinned.
 
 Use `/mcp` inside Claude Code to inspect the server and complete any authentication flow required by the remote MCP service.
+
+## Version 0.3.0 auth migration
+
+The MCP runtime now uses Convex-backed opaque OAuth tokens instead of the
+previous dynamic-client JWT flow. After updating to `0.3.0`, operators need to
+reauthenticate once through Claude Code's MCP authentication flow. This rotates
+credentials only; no clinic data is lost.
 
 ## Updating the installed plugin
 
@@ -79,6 +87,7 @@ The plugin expects the Souphi MCP runtime to expose these tools:
 - `bookings.adminReschedule`
 - `bookings.previewAdminCancel`
 - `bookings.adminCancel`
+- `bookings.previewWorkflowRecovery`
 - `bookings.recoverConfirmation`
 - `bookings.recoverModification`
 - `bookings.recoverCancellation`
@@ -95,28 +104,31 @@ The plugin expects the Souphi MCP runtime to expose these tools:
 - `treatments.get`
 - `treatments.previewInternalSetup`
 - `treatments.createInternal`
+- `treatments.previewStripeSync`
 - `treatments.syncStripeState`
 - `treatments.linkConsentTemplate`
 - `treatments.linkAftercareTemplate`
 - `treatments.createConsentTemplateDraft`
 - `treatments.createAftercareTemplateDraft`
 - `treatments.getSetupStatus`
-- `bookingConfig.get`
-- `bookingConfig.update`
+- `clinicSettings.get`
+- `clinicSettings.previewUpdate`
+- `clinicSettings.update`
 
 The bundled skills and agent are written to prefer these tools directly rather than inventing aliases or wrapper semantics.
 
 Important usage expectations:
 
-- `bookings.search` with no arguments returns a recent operator inbox
-- `bookings.search` should be called with no arguments unless the user explicitly provided a filter or a prior tool returned one
+- every tool call includes `tenantId`; this is a session safety echo, not a selector
+- `bookings.search` with only `tenantId` returns a recent operator inbox
+- `bookings.search` should be called with only `tenantId` unless the user explicitly provided a filter or a prior tool returned one
 - `bookings.search` becomes more precise with `bookingId`, exact `patientEmail` (plain `email` is also accepted), or explicit operational filters
 - `patientEmail`, `email`, and `bookingId` must not be inferred from the authenticated operator identity
 - admin cancel and reschedule stay preview-first
-- patient-facing access and invoice sends stay preview-first and require confirmed patient email plus `operatorReason`
+- patient-facing access and invoice sends stay preview-first and require patientId, preview artifact, and `operatorReason`
 - `patients.search` and `treatments.search` do not allow no-argument browsing
 - treatment slugs are checked before create, and template link updates preserve full rich-text content
-- `bookingConfig.update` is whole-object read-before-write with `previousConfiguration`
+- `clinicSettings.update` requires `clinicSettings.previewUpdate`, explicit confirmation, `operatorReason`, and the preview artifact
 
 ## Staff install path
 

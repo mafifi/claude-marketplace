@@ -13,14 +13,16 @@ Use the provisional checkout path when staff are creating a booking that still r
 
 ## Default workflow
 
-1. Gather the booking request fields needed by `bookings.createProvisionalCheckout`.
-2. Confirm the operator reason.
-3. Run `bookings.createProvisionalCheckout`.
-4. Return the resulting checkout URL and summarize any hold or expiry implications.
+1. Confirm the tenant first and include `tenantId` in every tool call.
+2. Gather the booking request fields needed by `bookings.createProvisionalCheckout`.
+3. Confirm the operator reason.
+4. Run `bookings.createProvisionalCheckout`.
+5. Return the resulting checkout URL and summarize any hold or expiry implications.
 
 ## Rules
 
 - this is a provisional checkout flow, not phone card capture
+- `tenantId` is a session safety echo, not a selector; if the tenant is wrong, the operator must switch session
 - if the requested appointment is too close to start for the operator hold window, report that clearly rather than improvising another path
 - keep patient detail handling minimal until the booking is being created
 

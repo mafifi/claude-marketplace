@@ -18,11 +18,12 @@ Use the patient tools when the operator needs to find a patient, create a patien
 
 ## Search and create
 
-1. Start with `patients.search` using explicit user input or a prior tool result.
-2. Never call `patients.search` without `patientId`, `email`, or a name of at least 2 characters.
-3. Before `patients.create`, search by exact email when available.
-4. If `patients.create` reports an exact email duplicate, stop and use the returned patient.
-5. If deterministic name candidates are returned, review them and retry with `confirmedNoMatch: true` only after the operator confirms none match.
+1. Confirm the tenant and include `tenantId` in every tool call.
+2. Start with `patients.search` using explicit user input or a prior tool result.
+3. Never call `patients.search` without `patientId`, `email`, or a name of at least 2 characters.
+4. Before `patients.create`, search by exact email when available.
+5. If `patients.create` reports an exact email duplicate, stop and use the returned patient.
+6. If deterministic name candidates are returned, review them and retry with `confirmedNoMatch: true` only after the operator confirms none match.
 
 ## Outstanding items
 
@@ -38,7 +39,7 @@ Use `patients.getOutstandingItems` before sending requests. Treat items as compl
 Patient-facing sends are preview-first.
 
 1. Run the matching preview tool.
-2. Show the patient name, patient email, and item identity.
+2. Show the patient name, masked patient email, tenantId, and item identity.
 3. Ask for explicit confirmation before sending.
-4. Execute only with `operatorConfirmed: true`, the confirmed patient email, item identity, and an `operatorReason`.
+4. Execute only with `operatorConfirmed: true`, patientId, item identity, an `operatorReason`, and the preview artifact.
 5. If execute reports drift, preview again before attempting another send.

@@ -1,7 +1,7 @@
 {
   "name": "clinic-operations",
-  "description": "Clinic Operations for Dr Souphi patients, treatments, bookings, recovery, and booking configuration.",
-  "version": "0.2.0",
+  "description": "Clinic Operations for Dr Souphi patients, treatments, bookings, recovery, and clinic settings.",
+  "version": "0.3.0",
   "author": {
     "name": "Projects Team"
   }
