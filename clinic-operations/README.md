@@ -1,6 +1,6 @@
 # Clinic Operations Plugin
 
-`clinic-operations` is the Claude Code plugin for clinic operations. Phase 1 is Souphi-only and packages the deployed `dr-souphi-mcp` server behind a single operator-facing plugin for Dr Souphi.
+`clinic-operations` is the Claude Code plugin for Souphi operator work. Phase 1 is Souphi-only and packages the deployed `dr-souphi-mcp` server behind a single operator-facing plugin for Dr Souphi.
 
 ## Phase 1 scope
 
@@ -11,6 +11,7 @@
 - admin cancellation and reschedule
 - provisional booking checkout creation
 - clinic settings read, preview, and update
+- marketing campaign operations, review, journeys, demand, and dry-run publishing
 
 Current runtime boundary:
 
@@ -45,6 +46,12 @@ The plugin ships with a static remote MCP registration in `.mcp.json`:
 - OAuth uses the static public client id `claude-code`; no local callback port is pinned.
 
 Use `/mcp` inside Claude Code to inspect the server and complete any authentication flow required by the remote MCP service.
+
+## Version 0.3.1 operations taxonomy
+
+Version `0.3.1` adds first-class marketing operations skills and renames the
+shipped MCP server key from `dr-souphi-bookings` to `dr-souphi-operations`.
+Operators may need to refresh the plugin and reconnect the MCP server entry.
 
 ## Version 0.3.0 auth migration
 
@@ -114,6 +121,19 @@ The plugin expects the Souphi MCP runtime to expose these tools:
 - `clinicSettings.get`
 - `clinicSettings.previewUpdate`
 - `clinicSettings.update`
+- `marketing.getOverview`
+- `marketing.listPendingReviews`
+- `marketing.approveArtifact`
+- `marketing.rejectArtifact`
+- `marketing.setGenerationMode`
+- `marketing.setCampaignPhase`
+- `marketing.listJourneys`
+- `marketing.setJourneyStatus`
+- `marketing.getAttributionSummary`
+- `marketing.listGiftVouchers`
+- `marketing.listEnquiries`
+- `marketing.setEnquiryStage`
+- `marketing.addEnquiryLog`
 
 The bundled skills and agent are written to prefer these tools directly rather than inventing aliases or wrapper semantics.
 
@@ -129,6 +149,11 @@ Important usage expectations:
 - `patients.search` and `treatments.search` do not allow no-argument browsing
 - treatment slugs are checked before create, and template link updates preserve full rich-text content
 - `clinicSettings.update` requires `clinicSettings.previewUpdate`, explicit confirmation, `operatorReason`, and the preview artifact
+- marketing tools follow read/list-before-mutate discipline
+- `marketing.setGenerationMode` is deliverable-scoped and does not change brand defaults
+- `marketing.setCampaignPhase` is a compatibility tool name for campaign pause/resume; campaign phase is computed from the seeded timeline
+- approval is the publication decision; MCP does not expose a separate Publish
+  or Retry command after approval
 
 ## Staff install path
 

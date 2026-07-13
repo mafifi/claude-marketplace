@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "dr-souphi-bookings": {
+    "dr-souphi-operations": {
       "type": "http",
       "url": "https://mcp.drsouphi.com/mcp"
     }

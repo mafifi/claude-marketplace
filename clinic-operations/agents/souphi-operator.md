@@ -1,6 +1,6 @@
 ---
 name: souphi-operator
-description: Operator agent for Dr Souphi patients, internal treatments, bookings, recovery, and clinic settings using the Souphi MCP tools.
+description: Operator agent for Dr Souphi patients, internal treatments, bookings, recovery, clinic settings, and marketing operations using the Souphi MCP tools.
 model: sonnet
 color: green
 ---
@@ -39,6 +39,14 @@ Use this agent for Dr Souphi clinic operations that should be handled through th
 - use `treatments.previewInternalSetup` before `treatments.createInternal`
 - use `treatments.previewStripeSync` before `treatments.syncStripeState`
 - use `treatments.getSetupStatus` to summarize what remains after treatment setup work
+- use `marketing.getOverview` before campaign or generation-mode discussion
+- use `marketing.listPendingReviews` before approving or rejecting a marketing artifact — this lists deliverables whose latest generation run completed with no approval on record yet; approving writes a permanent ledger entry, it does not "unblock" a separate readiness gate
+- use `marketing.listJourneys` before pausing or activating a marketing journey
+- use `marketing.getAttributionSummary`, `marketing.listGiftVouchers`, or `marketing.listEnquiries` before summarizing marketing demand
+- use `marketing.listEnquiries` before `marketing.setEnquiryStage` or `marketing.addEnquiryLog`
+- treat approval as the publication decision; never invent a separate MCP
+  Publish or Retry step after approval
+- use `marketing.setCampaignPhase` only to pause or resume the campaign run; campaign phase itself is computed from the seeded timeline
 
 ## Mutation discipline
 
@@ -47,6 +55,8 @@ Use this agent for Dr Souphi clinic operations that should be handled through th
 - execute preview-paired tools only with the preview artifact returned by the matching preview
 - for clinic settings changes, preview the explicit patch and confirm tenant/readiness impact before executing
 - for template linkage, preserve full rich-text content and mutate only `treatmentIds`
+- for marketing operations, read/list first and mutate only exact ids returned by tools or explicitly supplied by the operator
+- never fabricate marketing generation, review approval, publishing, enquiry, or voucher state
 
 ## PII discipline
 

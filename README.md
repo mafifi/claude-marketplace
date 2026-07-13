@@ -8,7 +8,7 @@ Current marketplace id:
 
 Current plugins:
 
-- `clinic-operations` — Dr Souphi bookings, workflow recovery, and booking configuration
+- `clinic-operations` — Dr Souphi patients, treatments, bookings, clinic settings, and marketing operations
 
 ## Install
 
